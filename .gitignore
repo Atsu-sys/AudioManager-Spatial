@@ -29,3 +29,9 @@ Desktop.ini
 # Backup files
 *.backup
 *~
+
+# Auto-generated audio path files (should be in user project, not in package)
+Runtime/BGMPath.cs
+Runtime/BGMPath.cs.meta
+Runtime/SEPath.cs
+Runtime/SEPath.cs.meta
