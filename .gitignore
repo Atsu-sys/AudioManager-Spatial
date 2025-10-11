@@ -1,43 +1,31 @@
-# ---------------[ original ]------------------ #
-
-
-# ---------------[ Folder ]------------------ #
-
-
-# ---------------[ Unity generated ]------------------ #
+# Unity generated
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
-UnityGenerated/
-.vscode/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
 
-# ----[ Visual Studio / MonoDevelop generated ]------- #
-  
-ExportedObj/
-*.svd
-*.userprefs
-*.csproj
-*.pidb
-*.suo
-*.sln
-*.user
-*.unityproj
-*.booproj
-.vs/  
+# Unity asset store
+AssetStoreTools/
 
-# -------------[ OS generated ]------------------------ #
+# Visual Studio cache directory
+.vs/
+
+# Rider
+.idea/
+
+# macOS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Icon?
-ehthumbs.db
+
+# Windows
 Thumbs.db
-LocalCache/ 
-# -------------[ Build ]------------------------ #
-*.html
-*.unity3d
-reloader.cs
-# -------------[ Rider ]------------------------ #
-.idea/*
+Desktop.ini
+
+# Unity Package files
+*.unitypackage
+
+# Backup files
+*.backup
+*~
