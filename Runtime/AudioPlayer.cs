@@ -1,14 +1,4 @@
-﻿namespace KanKikuchi.AudioManager {
-
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-
-/// <summary>
-/// オーディオを再生するクラス
-/// </summary>
-public class AudioPlayer {
-
+﻿
   //再生用のソース
   private readonly AudioSource _audioSource;
   

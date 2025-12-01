@@ -1,7 +1,9 @@
 {
     "name": "KanKikuchi.AudioManager",
     "rootNamespace": "KanKikuchi.AudioManager",
-    "references": [],
+    "references": [
+        "Meta.XR.Audio"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
