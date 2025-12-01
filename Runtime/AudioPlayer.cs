@@ -167,7 +167,7 @@ public class AudioPlayer {
       _audioSource.spatialBlend = 1.0f; // 3D
       if (_metaXRAudioSource != null) {
         _metaXRAudioSource.enabled = true;
-        _metaXRAudioSource.EnableReflections = true;
+        _metaXRAudioSource.EnableAcoustics = true;
       }
     } else {
       _audioSource.spatialBlend = 0.0f; // 2D
