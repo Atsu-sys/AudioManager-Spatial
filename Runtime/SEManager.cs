@@ -67,6 +67,30 @@ public class SEManager : AudioManager<SEManager> {
     }
   }
 
+  /// <summary>
+  /// 指定した位置にインジケータを表示して再生
+  /// </summary>
+  public void Play(AudioClip audioClip, Vector3 position, float volumeRate = 1, float delay = 0, float pitch = 1, bool isLoop = false, Action callback = null) {
+    Play(audioClip, volumeRate, delay, pitch, isLoop, callback);
+    CreateSpatialIndicator(position);
+  }
+
+  /// <summary>
+  /// 指定した位置にインジケータを表示して再生
+  /// </summary>
+  public void Play(string audioPath, Vector3 position, float volumeRate = 1, float delay = 0, float pitch = 1, bool isLoop = false, Action callback = null) {
+    Play(audioPath, volumeRate, delay, pitch, isLoop, callback);
+    CreateSpatialIndicator(position);
+  }
+
+  //インジケータを生成
+  private void CreateSpatialIndicator(Vector3 position) {
+    var prefab = AudioManagerSetting.Entity.SpatialIndicatorPrefab;
+    if (prefab != null) {
+      Instantiate(prefab, position, Quaternion.identity);
+    }
+  }
+
   //=================================================================================
   //取得
   //=================================================================================

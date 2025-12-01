@@ -137,6 +137,10 @@ public class AudioManagerSetting : ScriptableObject {
   public  AudioCompressionFormat  CompressionFormatForBGM => _compressionFormatForBGM;
   public  AudioCompressionFormat  CompressionFormatForSE  => _compressionFormatForSE;
   
+  [SerializeField]
+  private GameObject _spatialIndicatorPrefab = null;
+  public  GameObject  SpatialIndicatorPrefab => _spatialIndicatorPrefab;
+  
   #if UNITY_EDITOR
   [SerializeField]
   private AudioSampleRateSetting _sampleRateSettingForBGM = AudioSampleRateSetting.OptimizeSampleRate, _sampleRateSettingForSE = AudioSampleRateSetting.OptimizeSampleRate;
