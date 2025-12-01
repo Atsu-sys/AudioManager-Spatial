@@ -11,6 +11,9 @@ public class AudioPlayer {
 
   //再生用のソース
   private readonly AudioSource _audioSource;
+  
+  //Meta XR Audio Source
+  private readonly MetaXRAudioSource _metaXRAudioSource;
 
   //再生した時間
   public float PlayedTime => _audioSource.time;
@@ -48,6 +51,7 @@ public class AudioPlayer {
   public AudioPlayer(AudioSource audioSource) {
     _audioSource = audioSource;
     _audioSource.playOnAwake = false;
+    _metaXRAudioSource = _audioSource.GetComponent<MetaXRAudioSource>();
   }
 
   //=================================================================================
@@ -137,7 +141,7 @@ public class AudioPlayer {
   /// <summary>
   /// 再生開始
   /// </summary>
-  public void Play(AudioClip audioClip, float baseVolume, float volumeRate, float delay, float pitch, bool isLoop, Action callback = null) {
+  public void Play(AudioClip audioClip, float baseVolume, float volumeRate, float delay, float pitch, bool isLoop, Vector3? position = null, Action callback = null) {
     //停止中でなければ停止させる
     if (_currentState != AudioPlayer.State.Wait) {
       Stop();
@@ -155,6 +159,21 @@ public class AudioPlayer {
     _callback = callback;
     
     _audioSource.clip = audioClip;
+    
+    // 空間オーディオ設定
+    if (position.HasValue) {
+      _audioSource.transform.position = position.Value;
+      _audioSource.spatialBlend = 1.0f; // 3D
+      if (_metaXRAudioSource != null) {
+        _metaXRAudioSource.enabled = true;
+        _metaXRAudioSource.EnableReflections = true;
+      }
+    } else {
+      _audioSource.spatialBlend = 0.0f; // 2D
+      if (_metaXRAudioSource != null) {
+        _metaXRAudioSource.enabled = false;
+      }
+    }
     
     _currentState = _currentDelay > 0 ? State.Delay : State.Playing;
     if (_currentState == State.Playing) {

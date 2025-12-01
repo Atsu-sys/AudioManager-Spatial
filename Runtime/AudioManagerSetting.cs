@@ -138,8 +138,8 @@ public class AudioManagerSetting : ScriptableObject {
   public  AudioCompressionFormat  CompressionFormatForSE  => _compressionFormatForSE;
   
   [SerializeField]
-  private GameObject _spatialIndicatorPrefab = null;
-  public  GameObject  SpatialIndicatorPrefab => _spatialIndicatorPrefab;
+  private GameObject _sePrefab = null;
+  public  GameObject  SEPrefab => _sePrefab;
   
   #if UNITY_EDITOR
   [SerializeField]

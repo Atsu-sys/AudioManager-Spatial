@@ -35,6 +35,9 @@ public abstract class AudioManager<T> : SingletonMonoBehaviour<T> where T : Mono
 
 	//ボリュームの基準と倍率
 	private float _baseVolume = 1f;
+	
+	//AudioPlayerのPrefab(nullなら自動生成)
+	protected virtual GameObject PlayerPrefab => null;
 
 	//=================================================================================
 	//初期化、破棄
@@ -45,7 +48,16 @@ public abstract class AudioManager<T> : SingletonMonoBehaviour<T> where T : Mono
 
 		//AudioSourceとAudioPlayer生成
 		for (int i = 0; i < _audioPlayerNum; i++) {
-			_audioPlayerList.Add(new AudioPlayer(gameObject.AddComponent<AudioSource>()));
+			AudioSource audioSource = null;
+			if (PlayerPrefab != null) {
+				audioSource = Instantiate(PlayerPrefab, transform).GetComponent<AudioSource>();
+			}
+			
+			if (audioSource == null) {
+				audioSource = gameObject.AddComponent<AudioSource>();
+			}
+
+			_audioPlayerList.Add(new AudioPlayer(audioSource));
 		}
 	}
 
@@ -114,7 +126,7 @@ public abstract class AudioManager<T> : SingletonMonoBehaviour<T> where T : Mono
 	/// 再生開始
 	/// </summary>
 	protected void RunPlayer(AudioClip audioClip, float volumeRate, float delay, float pitch, bool isLoop, Action callback = null) {
-		GetNextAudioPlayer().Play(audioClip, _baseVolume, volumeRate, delay, pitch, isLoop, callback);
+		GetNextAudioPlayer().Play(audioClip, _baseVolume, volumeRate, delay, pitch, isLoop, null, callback);
 	}
 	
 	/// <summary>
@@ -122,6 +134,20 @@ public abstract class AudioManager<T> : SingletonMonoBehaviour<T> where T : Mono
 	/// </summary>
 	protected void RunPlayer(string audioPath, float volumeRate, float delay, float pitch, bool isLoop, Action callback = null) {
 		RunPlayer(GetAudioClip(audioPath), volumeRate, delay, pitch, isLoop, callback);
+	}
+
+	/// <summary>
+	/// 再生開始(位置指定)
+	/// </summary>
+	protected void RunPlayer(AudioClip audioClip, Vector3 position, float volumeRate, float delay, float pitch, bool isLoop, Action callback = null) {
+		GetNextAudioPlayer().Play(audioClip, _baseVolume, volumeRate, delay, pitch, isLoop, position, callback);
+	}
+
+	/// <summary>
+	/// 再生開始(位置指定)
+	/// </summary>
+	protected void RunPlayer(string audioPath, Vector3 position, float volumeRate, float delay, float pitch, bool isLoop, Action callback = null) {
+		RunPlayer(GetAudioClip(audioPath), position, volumeRate, delay, pitch, isLoop, callback);
 	}
 	
 	//オーディオのパスを名前に変換

@@ -20,23 +20,37 @@ https://github.com/kankikuchi/AudioManager.git
 
 ## ドキュメント
 
-[誰でも簡単に使える最強のAudio(BGM, SE)Manager【Unity】](http://kan-kikuchi.hatenablog.com/entry/AudioManager_2019)
+## Meta XR 空間オーディオ (Spatial Audio)
 
-## 空間オーディオ視覚インジケーター
+Meta XR Audio SDKを使用した3D空間オーディオ再生に対応しました。
 
-音が鳴った位置に視覚的なインジケーター（アイコンやエフェクトなど）を表示する機能を追加しました。
+### 前提条件
+
+* プロジェクトに **Meta XR Audio SDK** がインストールされていること。
+* `Runtime/KanKikuchi.AudioManager.asmdef` に Meta XR Audio SDK のAssembly Definitionへの参照（例: `Meta.XR.Audio` や `Oculus.Spatializer`）が追加されていること。
 
 ### 設定
 
-1. `Assets/Resources/AudioManagerSetting` を選択します。
-2. Inspectorの **Spatial Indicator Prefab** に、表示したいプレハブ（例: スピーカーアイコンの画像など）を設定します。
-   * **注意**: 設定するプレハブには、一定時間後に自身を削除するスクリプト（`Destroy(gameObject, time)`など）をアタッチしてください。
+1. **SE用プレハブの作成**:
+   * 新しいGameObjectを作成し、`AudioSource` と `MetaXRAudioSource` コンポーネントをアタッチします。
+   * **重要**: `MetaXRAudioSource` コンポーネントの `Enabled` はデフォルトで **オフ** にしてください（スクリプトから制御されます）。
+   * 必要に応じて `Enable Reflections` などを有効にします。
+   * これをプレハブ化します（例: `SpatialSEPlayer`）。
+
+2. **AudioManagerの設定**:
+   * `Assets/Resources/AudioManagerSetting` を選択します。
+   * Inspectorの **SE Prefab** フィールドに、作成したプレハブを割り当てます。
 
 ### 使い方
 
-`SEManager.Instance.Play` メソッドの引数に `Vector3 position` を渡すことで、その位置にインジケーターを表示して音を再生します。
+`SEManager.Instance.Play` メソッドの引数に `Vector3 position` を渡すことで、その位置から空間オーディオとして再生されます。
 
 ```csharp
-// 現在のオブジェクトの位置でSEを再生し、インジケーターを表示
+// 指定した位置(transform.position)から3D音響として再生
+// MetaXRAudioSourceが有効になり、spatialBlendが1.0になります
 SEManager.Instance.Play("SE_Name", transform.position);
+
+// 通常の2D再生（位置指定なし）
+// MetaXRAudioSourceが無効になり、spatialBlendが0.0になります
+SEManager.Instance.Play("SE_Name");
 ```

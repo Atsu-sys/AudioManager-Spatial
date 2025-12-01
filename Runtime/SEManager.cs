@@ -10,6 +10,9 @@ public class SEManager : AudioManager<SEManager> {
 
   //AudioPlayerの数(同時再生可能数)
   protected override int _audioPlayerNum => AudioManagerSetting.Entity.SEAudioPlayerNum;
+  
+  //SE用のPrefab
+  protected override GameObject PlayerPrefab => AudioManagerSetting.Entity.SEPrefab;
 
   //オーディオファイルが入ってるディレクトリへのパス
   public static readonly string AUDIO_DIRECTORY_PATH = "SE";
@@ -68,26 +71,22 @@ public class SEManager : AudioManager<SEManager> {
   }
 
   /// <summary>
-  /// 指定した位置にインジケータを表示して再生
+  /// 指定した位置で再生(3D空間オーディオ)
   /// </summary>
   public void Play(AudioClip audioClip, Vector3 position, float volumeRate = 1, float delay = 0, float pitch = 1, bool isLoop = false, Action callback = null) {
-    Play(audioClip, volumeRate, delay, pitch, isLoop, callback);
-    CreateSpatialIndicator(position);
+    volumeRate = AdjustVolumeRate(volumeRate, audioClip.name);
+    if (volumeRate > 0) {
+      RunPlayer(audioClip, position, volumeRate, delay, pitch, isLoop, callback);
+    }
   }
 
   /// <summary>
-  /// 指定した位置にインジケータを表示して再生
+  /// 指定した位置で再生(3D空間オーディオ)
   /// </summary>
   public void Play(string audioPath, Vector3 position, float volumeRate = 1, float delay = 0, float pitch = 1, bool isLoop = false, Action callback = null) {
-    Play(audioPath, volumeRate, delay, pitch, isLoop, callback);
-    CreateSpatialIndicator(position);
-  }
-
-  //インジケータを生成
-  private void CreateSpatialIndicator(Vector3 position) {
-    var prefab = AudioManagerSetting.Entity.SpatialIndicatorPrefab;
-    if (prefab != null) {
-      Instantiate(prefab, position, Quaternion.identity);
+    volumeRate = AdjustVolumeRate(volumeRate, audioPath);
+    if (volumeRate > 0) {
+      RunPlayer(audioPath, position, volumeRate, delay, pitch, isLoop, callback);
     }
   }
 
