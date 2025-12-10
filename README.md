@@ -14,6 +14,30 @@ kankikuchi様のAudioManagerをUPM化させていただきました。
    https://github.com/Atsu-sys/AudioManager-Spatial.git
    ```
 
+### インストールエラーが発生した場合
+
+**EPERMエラー（権限エラー）が発生した場合：**
+
+1. **Unityエディタを完全に終了**（すべてのインスタンス）
+2. **PackageCacheをクリア**:
+   - `プロジェクトフォルダ/Library/PackageCache/com.kankikuchi.audiomanager@*` を削除
+   - `プロジェクトフォルダ/Library/PackageCache/.tmp-*` を削除（一時ディレクトリ）
+3. **Unityエディタを再起動**して再度インストールを試みる
+
+詳細は [TROUBLESHOOTING.md](TROUBLESHOOTING.md) を参照してください。
+
+**代替インストール方法：**
+
+- **ローカルパスから**: リポジトリをクローンし、`Add package from disk...` で `package.json` を選択
+- **manifest.jsonに直接追加**:
+  ```json
+  {
+    "dependencies": {
+      "com.kankikuchi.audiomanager": "https://github.com/Atsu-sys/AudioManager-Spatial.git"
+    }
+  }
+  ```
+
 ## Fork元リポジトリ
 
 https://github.com/kankikuchi/AudioManager.git

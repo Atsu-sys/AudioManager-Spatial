@@ -1,7 +1,7 @@
 {
   "name": "com.kankikuchi.audiomanager",
   "version": "1.2.0",
-  "displayName": "Audio Manager",
+  "displayName": "AudioManager Spatial",
   "description": "Unityで誰でも簡単にSEやBGMを管理できるシステム",
   "unity": "2020.3",
   "keywords": ["audio", "bgm", "se", "sound"],
